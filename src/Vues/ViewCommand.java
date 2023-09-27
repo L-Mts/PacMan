@@ -1,6 +1,12 @@
+package Vues;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import Controlleurs.*;
+import States.*;
+import Games.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

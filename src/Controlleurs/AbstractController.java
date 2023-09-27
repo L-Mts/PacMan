@@ -1,11 +1,15 @@
+package Controlleurs;
+
+import Games.*;
+
 public abstract class AbstractController {
 
     // --- Attributs --- //
-    Game jeu;
+    private Game jeu;
 
     // --- Constructeur --- //
 
-    AbstractController (Game jeu) {
+    public AbstractController (Game jeu) {
         this.jeu = jeu;
     }
 

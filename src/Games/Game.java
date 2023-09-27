@@ -1,3 +1,5 @@
+package Games;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.Runnable;
@@ -16,13 +18,13 @@ public abstract class Game implements Runnable {
     //vérifie mise en pause ou non
     public boolean isRunning;
 
-    Thread thread;
+    private Thread thread;
 
-    long time;
+    public long time;
 
     // --- Constructeur --- //
 
-    Game(int maxturn) {
+    public Game(int maxturn) {
         this.maxturn = maxturn;
         this.isRunning = false;
         this.time = 1000;

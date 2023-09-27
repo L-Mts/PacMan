@@ -1,8 +1,9 @@
+package Games;
 public class SimpleGame extends Game {
 
     // --- Constructeur --- //
 
-    SimpleGame (int maxturn) {
+    public SimpleGame (int maxturn) {
         super(maxturn);  
     }
 

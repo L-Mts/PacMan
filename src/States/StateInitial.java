@@ -1,22 +1,24 @@
+package States;
+
 public class StateInitial extends State {
 
     @Override
-    boolean LockRestartButton() {
+    public boolean LockRestartButton() {
         return true;
     }
 
     @Override
-    boolean LockPauseButton() {
+    public boolean LockPauseButton() {
         return true;
     }
 
     @Override
-    boolean LockPlayButton() {
+    public boolean LockPlayButton() {
         return false;
     }
 
     @Override
-    boolean LockStepButton() {
+    public  boolean LockStepButton() {
         return false;
     }
     

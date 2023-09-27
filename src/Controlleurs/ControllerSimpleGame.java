@@ -1,10 +1,15 @@
+package Controlleurs;
+
+import Games.*;
+import Vues.*;
+
 public class ControllerSimpleGame extends AbstractController {
     
-    Game jeu;
-    ViewSimpleGame vueJeu;
-    ViewCommand vueCommandes;
+    public Game jeu;
+    public ViewSimpleGame vueJeu;
+    public ViewCommand vueCommandes;
 
-    ControllerSimpleGame (SimpleGame jeuSimple) {
+    public ControllerSimpleGame (SimpleGame jeuSimple) {
         super(jeuSimple);
         this.vueJeu = new ViewSimpleGame(jeuSimple);
         this.vueCommandes = new ViewCommand(jeuSimple, this);
