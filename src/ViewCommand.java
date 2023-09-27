@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 public class ViewCommand implements PropertyChangeListener {
 
     private JLabel labelTurns;
+    private State state;
 
     // --- Constructeur --- //
     
@@ -69,6 +70,9 @@ public class ViewCommand implements PropertyChangeListener {
 
         commandsView.setVisible(true);
 
+        // Ajout Etat à la vue
+        this.state = new StateInitial();
+
         // Déclaration observateur de "turn"
         simpleGame.addPropertyChangeListener("turn", this);
 
@@ -77,28 +81,40 @@ public class ViewCommand implements PropertyChangeListener {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.restart();
+                if(!state.LockRestartButton()) {
+                    controller.restart();
+                    state = new StatePause();
+                }
             }
         });
 
         runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.play();
+                if(!state.LockPlayButton()){
+                    controller.play();
+                    state = new StateRunning();
+                }  
             }
         });
 
         pauseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.pause();
+                if(!state.LockPauseButton()){
+                    controller.pause();
+                    state = new StatePause();
+                }
             }
         });
 
         stepButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controller.step();
+                if(!state.LockStepButton()) {
+                    controller.step();
+                    state = new StatePause();
+                }
             }
         });
 
