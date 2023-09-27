@@ -5,11 +5,11 @@ import java.beans.PropertyChangeListener;
 
 public class ViewSimpleGame implements PropertyChangeListener {
 
-    JLabel label;
+    private JLabel label;
 
     // --- Constructeur --- //
 
-    public ViewSimpleGame (JLabel label, SimpleGame simpleGame) {
+    public ViewSimpleGame (SimpleGame jeu) {
     
         JFrame simpleGameView = new JFrame();
         simpleGameView.setTitle("Game");
@@ -21,13 +21,13 @@ public class ViewSimpleGame implements PropertyChangeListener {
         int dy = centerPoint.y - windowSize.height / 2 - 350;
         simpleGameView.setLocation(dx, dy);
 
-        this.label = label;
+        this.label = new JLabel ("Current Turn : 0", JLabel.CENTER);
         simpleGameView.add(label);
 
         simpleGameView.setVisible(true);
 
         // Déclaration observateur de "turn"
-        simpleGame.addPropertyChangeListener("turn", this);
+        jeu.addPropertyChangeListener("turn", this);
 
     }
 

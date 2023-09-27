@@ -16,7 +16,17 @@ public abstract class Game implements Runnable {
 
     Thread thread;
 
-    long time = 1000;
+    long time;
+
+    // --- Constructeur --- //
+
+    Game(int maxturn) {
+        this.turn = 0;
+        this.maxturn = maxturn;
+        this.isRunning = false;
+        this.time = 1000;
+        this.init();
+    }
 
     // --- Méthodes Abstraites --- //
 
@@ -55,7 +65,7 @@ public abstract class Game implements Runnable {
     public void run() {
         while(this.isRunning) {
             try {
-                Thread.sleep(time);
+                Thread.sleep(this.time);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

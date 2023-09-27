@@ -5,11 +5,11 @@ import java.beans.PropertyChangeListener;
 
 public class ViewCommand implements PropertyChangeListener {
 
-    JLabel labelTurns;
+    private JLabel labelTurns;
 
     // --- Constructeur --- //
     
-    public ViewCommand (JLabel labelTurns, SimpleGame simpleGame) {
+    public ViewCommand (SimpleGame simpleGame /*, AbstractController controller*/) {
 
         JFrame commandsView = new JFrame();
         commandsView.setTitle("Commands");
@@ -44,10 +44,12 @@ public class ViewCommand implements PropertyChangeListener {
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         JLabel sliderLabel = new JLabel ("Number of turns per second", JLabel.CENTER);
-        this.labelTurns = labelTurns;
+        this.labelTurns = new JLabel("Current Turn : 0", JLabel.CENTER);
 
+        //Ajout panelMain à la JFrame
         commandsView.add(panelMain);
 
+        //Ajout des éléments dans les panels
         panelMain.add(panelTop);
         panelTop.add(restartButton);
         panelTop.add(runButton);
@@ -65,6 +67,7 @@ public class ViewCommand implements PropertyChangeListener {
         // Déclaration observateur de "turn"
         simpleGame.addPropertyChangeListener("turn", this);
 
+    
     }
 
     // --- Observateur --- //

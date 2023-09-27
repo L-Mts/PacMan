@@ -3,6 +3,13 @@ import java.beans.PropertyChangeListener;
 
 public class SimpleGame extends Game {
 
+    // --- Constructeur --- //
+
+    SimpleGame (int maxturn) {
+        super(maxturn);
+        
+    }
+
     // --- Observé --- //
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
