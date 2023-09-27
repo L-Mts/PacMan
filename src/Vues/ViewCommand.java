@@ -89,7 +89,7 @@ public class ViewCommand implements PropertyChangeListener {
             public void actionPerformed(ActionEvent e) {
                 if(!state.LockRestartButton()) {
                     controller.restart();
-                    state = new StatePause();
+                    state = new StateInitial();
                 }
             }
         });
