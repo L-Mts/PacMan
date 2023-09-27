@@ -1,3 +1,5 @@
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.lang.Runnable;
 
 public abstract class Game implements Runnable {
@@ -21,12 +23,30 @@ public abstract class Game implements Runnable {
     // --- Constructeur --- //
 
     Game(int maxturn) {
-        this.turn = 0;
         this.maxturn = maxturn;
         this.isRunning = false;
         this.time = 1000;
         this.init();
     }
+
+    // --- Observé --- //
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    
+    public void addPropertyChangeListener(String property, PropertyChangeListener listener) {
+        support.addPropertyChangeListener( property, listener);
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    
+    public void removePropertyChangeListener(String property, PropertyChangeListener listener) {
+        support.removePropertyChangeListener(property, listener);
+    }
+
+
 
     // --- Méthodes Abstraites --- //
 
@@ -41,7 +61,6 @@ public abstract class Game implements Runnable {
     //initialise jeu
     public void init() {
         this.turn = 0;
-        this.isRunning = true;
         initialiseGame();
     }
 
@@ -49,6 +68,7 @@ public abstract class Game implements Runnable {
     public void step() {
         this.turn = this.turn + 1;
         if (gameContinue()) {
+            support.firePropertyChange("turn", this.turn - 1, this.turn);
             takeTurn();
         } else {
             this.isRunning = false;
@@ -78,6 +98,6 @@ public abstract class Game implements Runnable {
     public void launch() {
         this.isRunning = true;
         this.thread = new Thread(this);
-        thread.start();
+        thread.start();                     //lance this.run()
     }
 }

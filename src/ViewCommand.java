@@ -1,5 +1,10 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -9,7 +14,7 @@ public class ViewCommand implements PropertyChangeListener {
 
     // --- Constructeur --- //
     
-    public ViewCommand (SimpleGame simpleGame /*, AbstractController controller*/) {
+    public ViewCommand (Game simpleGame, AbstractController controller) {
 
         JFrame commandsView = new JFrame();
         commandsView.setTitle("Commands");
@@ -39,7 +44,7 @@ public class ViewCommand implements PropertyChangeListener {
         JButton stepButton = new JButton(stepIcon);
 
         // Slider and Label
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 10, 2);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 10, 1);
         slider.setMajorTickSpacing(1);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
@@ -67,7 +72,43 @@ public class ViewCommand implements PropertyChangeListener {
         // Déclaration observateur de "turn"
         simpleGame.addPropertyChangeListener("turn", this);
 
-    
+        // Déclaration des observateurs des boutons
+        // Appel des fonctions du controlleur à effectuer
+        restartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.restart();
+            }
+        });
+
+        runButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.play();
+            }
+        });
+
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.pause();
+            }
+        });
+
+        stepButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.step();
+            }
+        });
+
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                double speed = slider.getValue();
+                controller.setSpeed(speed);
+            }
+        });
     }
 
     // --- Observateur --- //

@@ -27,7 +27,7 @@ public abstract class AbstractController {
     // passage automatique des étapes
     public void play () {
         System.out.println("Mode automatique du passage des étapes\n");
-        this.jeu.run();
+        this.jeu.launch();
     }
 
     // interruption du passage automatique des étapes
@@ -39,8 +39,9 @@ public abstract class AbstractController {
     // réglage de la vitesse du jeu
     // !attention! conversion à faire pour régler temps de pause entre chaque tour de jeu
     public void setSpeed (double speed) {
-        System.out.println("La vitesse a été réglée sur " + speed + "\n");
-        //TODO A implémenter !!!
+        long speedLong = (long) speed;
+        System.out.println("La vitesse a été réglée sur " + speedLong + "\n");
+        this.jeu.time = 1000 / speedLong;
     }
     
 }
