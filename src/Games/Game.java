@@ -89,7 +89,7 @@ public abstract class Game implements Runnable {
             try {
                 Thread.sleep(this.time);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
+                // Auto-generated catch block
                 e.printStackTrace();
             }
             step();
