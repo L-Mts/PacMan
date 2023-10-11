@@ -1,5 +1,7 @@
 import Controlleurs.*;
 import Games.*;
+import Ressources.PanelPacmanGame;
+import Vues.ViewCommand;
 import Vues.ViewPacmanGame;
 
 
@@ -18,7 +20,7 @@ public class Test {
           * TEST PACMANGAMEVIEW
           */
 
-        //ControleurPacmanGame control = new ControleurPacmanGame(new PacmanGame(10));
+        //ControleurPacmanGame control = new ControleurPacmanGame(new PacmanGame(10, new PanelPacmanGame(null)));
 
 
     }
