@@ -5,16 +5,14 @@ import Vues.*;
 
 public class ControleurPacmanGame extends AbstractController {
 
-    //TODO : changer tout (copier coller du ControllerSimpleGame)
-
     public Game jeu;
-    public ViewSimpleGame vueJeu;
+    public ViewPacmanGame vueJeu;
     public ViewCommand vueCommandes;
 
-    public ControleurPacmanGame (SimpleGame jeuSimple) {
-        super(jeuSimple);
-        this.vueJeu = new ViewSimpleGame(jeuSimple);
-        this.vueCommandes = new ViewCommand(jeuSimple, this);
+    public ControleurPacmanGame (Game jeu) throws Exception {
+        super(jeu);
+        this.vueJeu = new ViewPacmanGame(jeu);
+        this.vueCommandes = new ViewCommand(jeu, this);
     }
 
     

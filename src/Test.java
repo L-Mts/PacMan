@@ -18,8 +18,7 @@ public class Test {
           * TEST PACMANGAMEVIEW
           */
 
-        Game jeu = new PacmanGame(5);
-        ViewPacmanGame view = new ViewPacmanGame(jeu);
+        ControleurPacmanGame control = new ControleurPacmanGame(new PacmanGame(10));
 
 
     }

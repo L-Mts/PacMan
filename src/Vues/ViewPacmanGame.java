@@ -3,20 +3,26 @@ package Vues;
 import javax.swing.*;
 
 import Games.*;
+import Ressources.AgentAction;
 import Ressources.Maze;
 import Ressources.PanelPacmanGame;
+import Ressources.PositionAgent;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 
 public class ViewPacmanGame implements PropertyChangeListener {
 
+    Maze maze;
+    PanelPacmanGame panel;
+
     public ViewPacmanGame (Game jeu) throws Exception {
 
-        Maze maze = new Maze("layouts/testMaze.lay");
-        PanelPacmanGame panel = new PanelPacmanGame(maze);
+        this.maze = new Maze("layouts/testMaze.lay");
+        this.panel = new PanelPacmanGame(maze);
 
         JFrame pacmanGameView = new JFrame();
         pacmanGameView.setTitle("Game");
@@ -43,8 +49,13 @@ public class ViewPacmanGame implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'propertyChange'");
+        // TODO implémenter ce qui se passe à chaque tour :
+        //      - Mouvement de Pacman
+        //      - Mouvement des fantômes
+        //      - Si Pacman passe sur une case avec nourriture --> mange la nourriture
+        //      - Si Pacman passe sur une case avec une capsule --> mange la capsule + ghost_scared
+        //      - Si Pacman passe sur une case avec un fantôme --> meurt
+        //      - Si Pacman passe sur une case avec un fantôme après avoir mangé capsule --> fantôme meurt
     }
 
 }

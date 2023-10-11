@@ -21,7 +21,7 @@ public class ViewCommand implements PropertyChangeListener {
 
     // --- Constructeur --- //
     
-    public ViewCommand (Game simpleGame, AbstractController controller) {
+    public ViewCommand (Game jeu, AbstractController controller) {
 
         JFrame commandsView = new JFrame();
         commandsView.setTitle("Commands");
@@ -80,7 +80,7 @@ public class ViewCommand implements PropertyChangeListener {
         this.state = new StateInitial();
 
         // Déclaration observateur de "turn"
-        simpleGame.addPropertyChangeListener("turn", this);
+        jeu.addPropertyChangeListener("turn", this);
 
         // Déclaration des observateurs des boutons
         // Appel des fonctions du controlleur à effectuer
