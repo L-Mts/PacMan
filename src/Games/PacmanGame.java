@@ -37,6 +37,7 @@ public class PacmanGame extends Game {
 
     @Override
     public void takeTurn() {
+        // effectue une action pour chaque agent puis met à jour labyrinthe
         System.out.println("Tour " + this.turn + " en cours");
     }
 
@@ -52,6 +53,31 @@ public class PacmanGame extends Game {
 
 
     // --- Méthodes de la classe --- //
+
+    // vérification que le mouvement de l'agent est possible dans le labyrinthe
+    public boolean isLegalMove (AbstractAgent agent, AgentAction action) {
+        PositionAgent pos = agent.getPos();
+        int vx = action.get_vx();
+        int vy = action.get_vy();
+
+        if (maze.isWall(pos.getX()+vx, pos.getY()+vy) != true) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    // mise à jour position de l'agent après action
+    public void moveAgent(AbstractAgent agent, AgentAction action) {
+        if(isLegalMove(agent, action)) {
+            int vx = action.get_vx();
+            int vy = action.get_vy();
+            int dir = action.get_direction();
+            PositionAgent pos = agent.getPos();
+            PositionAgent new_pos = new PositionAgent(pos.getX()+vx, pos.getY()+vy, dir);
+            agent.setPos(new_pos);
+        }
+    }
 
     public ArrayList<AbstractAgent> getListe_agents() {
         return liste_agents;

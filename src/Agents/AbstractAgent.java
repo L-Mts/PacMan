@@ -6,7 +6,7 @@ public abstract class AbstractAgent {
 
     // --- Attributs --- //
 
-    PositionAgent pos;
+    private PositionAgent pos;
 
     // --- Constructeur --- //
 
@@ -14,4 +14,13 @@ public abstract class AbstractAgent {
         this.pos = pos;
     }
     
+    // --- Méthodes --- //
+
+    public PositionAgent getPos() {
+        return pos;
+    }
+
+    public void setPos(PositionAgent pos) {
+        this.pos = pos;
+    }
 }
