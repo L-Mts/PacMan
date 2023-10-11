@@ -11,9 +11,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 
-public class ViewPacmanGame {
+public class ViewPacmanGame implements PropertyChangeListener {
 
-    public ViewPacmanGame (/*Game jeu*/) throws Exception {
+    public ViewPacmanGame (Game jeu) throws Exception {
 
         Maze maze = new Maze("layouts/testMaze.lay");
         PanelPacmanGame panel = new PanelPacmanGame(maze);
@@ -36,10 +36,15 @@ public class ViewPacmanGame {
         
         pacmanGameView.setVisible(true);
         
-        // SORTIES CONSOLES POUR COMPRENDRE CE QUI SE PASSE
-        System.out.println(maze.getPacman_start());
-        System.out.println(maze.getGhosts_start());
+        // Observateur de "turn"
+        jeu.addPropertyChangeListener("turn", this);
 
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'propertyChange'");
     }
 
 }

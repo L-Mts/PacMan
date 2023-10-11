@@ -4,31 +4,28 @@ public class PacmanGame extends Game {
 
     public PacmanGame(int maxturn) {
         super(maxturn);
-        //TODO Auto-generated constructor stub
     }
+
+    // --- Méthodes Héritées de Game --- //
 
     @Override
     public void initialiseGame() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'initialiseGame'");
+        System.out.println("Le jeu est initialisé");
     }
 
     @Override
     public void takeTurn() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'takeTurn'");
+        System.out.println("Tour " + this.turn + " en cours");
     }
 
     @Override
     public boolean gameContinue() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'gameContinue'");
+        return true;
     }
 
     @Override
     public void gameOver() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'gameOver'");
+        System.out.println("Le jeu est terminé");
     }
     
 }

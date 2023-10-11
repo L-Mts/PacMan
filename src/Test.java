@@ -17,7 +17,9 @@ public class Test {
          /**
           * TEST PACMANGAMEVIEW
           */
-        ViewPacmanGame view = new ViewPacmanGame();
+
+        Game jeu = new PacmanGame(5);
+        ViewPacmanGame view = new ViewPacmanGame(jeu);
 
 
     }
