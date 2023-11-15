@@ -3,15 +3,11 @@ package Vues;
 import javax.swing.*;
 
 import Games.*;
-import Ressources.AgentAction;
-import Ressources.Maze;
-import Ressources.PanelPacmanGame;
-import Ressources.PositionAgent;
+import Ressources.*;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 
 
 public class ViewPacmanGame implements PropertyChangeListener {

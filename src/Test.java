@@ -22,7 +22,6 @@ public class Test {
 
         PacmanGame jeu = new PacmanGame(10);
 
-
         ControleurPacmanGame control = new ControleurPacmanGame(jeu); //, new PanelPacmanGame(null)));
 
 
