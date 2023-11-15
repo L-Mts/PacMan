@@ -37,7 +37,7 @@ public class PacmanGame extends Game {
         for (PositionAgent e : ghosts_start) {
             this.liste_agents.add(new AgentGhost(e));
         }
-        
+
         System.out.println("Le jeu est initialisé");
     }
     
@@ -45,23 +45,15 @@ public class PacmanGame extends Game {
     @Override
     public void takeTurn() {
         // effectue une action pour chaque agent
-        ArrayList<PositionAgent> pacman_pos = new ArrayList<PositionAgent>();
-        ArrayList<PositionAgent> ghost_pos = new ArrayList<PositionAgent>();
-        for (AbstractAgent e : liste_agents) {
-            moveAgent(e, new AgentAction(2));                   // TODO : changer le nombre dans new AgentAction selon stratégie !
-            if (e instanceof AgentPacman) pacman_pos.add(e.getPos());
-            if (e instanceof AgentGhost) ghost_pos.add(e.getPos());
+
+        //Pour l'instant : génère nombre aléatoire
+        //TODO: implémenter stratégies -> génération int de direction selon stratégie de chaque agent
+        int random = (int) (Math.random() * 5);
+
+        for (AbstractAgent e : this.liste_agents) {
+            moveAgent(e, new AgentAction(random));                   // TODO : changer le nombre dans new AgentAction selon stratégie !
         }
        
-        /* A FAIRE DANS LA VUE !!!
-         * 
-         * panel.setPacmans_pos(pacman_pos);
-         * panel.setGhosts_pos(ghost_pos);
-         * 
-         * panel.repaint();
-         */
-
-
         // TODO mise à jour du labyrinthe (food eaten, ...)
         // = mise à jour des tableaux de boolean Food et Capsule
         

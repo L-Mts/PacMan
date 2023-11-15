@@ -31,7 +31,7 @@ public abstract class Game implements Runnable {
     public Game(int maxturn) {
         this.maxturn = maxturn;
         this.isRunning = false;
-        this.time = 1000;
+        this.time = 500;
         this.init();
     }
 
@@ -79,8 +79,8 @@ public abstract class Game implements Runnable {
     public void step() {
         this.turn = this.turn + 1;
         if (gameContinue()) {
-            support.firePropertyChange("turn", this.turn - 1, this.turn);
             takeTurn();
+            support.firePropertyChange("turn", this.turn - 1, this.turn);
         } else {
             this.isRunning = false;
             gameOver();

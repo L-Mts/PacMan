@@ -2,30 +2,33 @@ package Vues;
 
 import javax.swing.*;
 
+import Agents.*;
 import Games.*;
 import Ressources.*;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 
 public class ViewPacmanGame implements PropertyChangeListener {
 
     PanelPacmanGame panel;
+    PacmanGame jeu;
 
-    public ViewPacmanGame (Game jeu) {
+    public ViewPacmanGame (PacmanGame jeu) {
 
-        System.out.println(jeu.maze.toString()); // NE TROUVE PAS LE MAZE
+        this.jeu = jeu;
 
-        this.panel = new PanelPacmanGame(jeu.maze);
+        this.panel = new PanelPacmanGame(this.jeu.maze);
 
         JFrame pacmanGameView = new JFrame();
         pacmanGameView.setTitle("Game");
 
-        int maze_x = jeu.maze.getSizeX();
-        int maze_y = jeu.maze.getSizeY();
-        pacmanGameView.setSize(new Dimension(maze_x*30,maze_y*30));
+        int maze_x = this.jeu.maze.getSizeX();
+        int maze_y = this.jeu.maze.getSizeY();
+        pacmanGameView.setSize(new Dimension(maze_x*40,maze_y*40));
         Dimension windowSize = pacmanGameView.getSize();
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -39,7 +42,7 @@ public class ViewPacmanGame implements PropertyChangeListener {
         pacmanGameView.setVisible(true);
         
         // Observateur de "turn"
-        jeu.addPropertyChangeListener("turn", this);
+        this.jeu.addPropertyChangeListener("turn", this);
 
     }
 
@@ -52,6 +55,23 @@ public class ViewPacmanGame implements PropertyChangeListener {
         //      - Si Pacman passe sur une case avec une capsule --> mange la capsule + ghost_scared
         //      - Si Pacman passe sur une case avec un fantôme --> meurt
         //      - Si Pacman passe sur une case avec un fantôme après avoir mangé capsule --> fantôme meurt
+
+        ArrayList<PositionAgent> pacman_pos = new ArrayList<PositionAgent>();
+        ArrayList<PositionAgent> ghost_pos = new ArrayList<PositionAgent>();
+
+        for (AbstractAgent e : this.jeu.getListe_agents()) {
+            if (e instanceof AgentPacman) {
+                pacman_pos.add(e.getPos());
+            } else {
+                ghost_pos.add(e.getPos());
+            }
+        }
+
+        panel.setPacmans_pos(pacman_pos);
+        panel.setGhosts_pos(ghost_pos);
+        
+
+        panel.repaint();
     }
 
 }

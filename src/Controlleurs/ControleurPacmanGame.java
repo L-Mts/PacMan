@@ -9,9 +9,9 @@ public class ControleurPacmanGame extends AbstractController {
     public ViewPacmanGame vueJeu;
     public ViewCommand vueCommandes;
 
-    public ControleurPacmanGame (Game jeu) throws Exception {
+    public ControleurPacmanGame (PacmanGame jeu) throws Exception {
         super(jeu);
-        
+
         this.vueJeu = new ViewPacmanGame(jeu);
         this.vueCommandes = new ViewCommand(jeu, this);
     }
