@@ -1,9 +1,5 @@
 import Controlleurs.*;
 import Games.*;
-import Ressources.PanelPacmanGame;
-import Vues.ViewCommand;
-import Vues.ViewPacmanGame;
-
 
 public class Test {
     public static void main(String[] args) throws Exception {
