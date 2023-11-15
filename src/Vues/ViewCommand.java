@@ -25,7 +25,7 @@ public class ViewCommand implements PropertyChangeListener {
 
         JFrame commandsView = new JFrame();
         commandsView.setTitle("Commands");
-        commandsView.setSize(new Dimension(700, 250));
+        commandsView.setSize(new Dimension(500, 200));
         Dimension windowSize = commandsView.getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPoint = ge.getCenterPoint();

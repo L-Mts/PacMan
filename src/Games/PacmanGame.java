@@ -52,7 +52,11 @@ public class PacmanGame extends Game {
 
         for (AbstractAgent e : this.liste_agents) {
             moveAgent(e, new AgentAction(random));                   // TODO : changer le nombre dans new AgentAction selon stratégie !
+            if (this.maze.isFood(e.getPos().getX(), e.getPos().getY())) {
+                this.maze.setFood(e.getPos().getX(), e.getPos().getY(), false);
+            }
         }
+
        
         // TODO mise à jour du labyrinthe (food eaten, ...)
         // = mise à jour des tableaux de boolean Food et Capsule

@@ -40,7 +40,6 @@ public class PanelPacmanGame extends JPanel {
 	private static int fa = 0;
 
 	public PanelPacmanGame(Maze maze) {
-		System.out.println(maze.toString()); // MAZE NON TROUVE --> POURQUOI ????????
 		this.m = maze;
 		pacmans_pos = this.m.getPacman_start();
 		ghosts_pos = this.m.getGhosts_start();

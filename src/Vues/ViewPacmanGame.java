@@ -28,7 +28,7 @@ public class ViewPacmanGame implements PropertyChangeListener {
 
         int maze_x = this.jeu.maze.getSizeX();
         int maze_y = this.jeu.maze.getSizeY();
-        pacmanGameView.setSize(new Dimension(maze_x*40,maze_y*40));
+        pacmanGameView.setSize(new Dimension(maze_x*30,maze_y*30));
         Dimension windowSize = pacmanGameView.getSize();
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -46,6 +46,7 @@ public class ViewPacmanGame implements PropertyChangeListener {
 
     }
 
+    // Méthode UPDATE
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // TODO implémenter ce qui se passe à chaque tour :
