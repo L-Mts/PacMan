@@ -20,7 +20,10 @@ public class Test {
           * TEST PACMANGAMEVIEW
           */
 
-        //ControleurPacmanGame control = new ControleurPacmanGame(new PacmanGame(10, new PanelPacmanGame(null)));
+        PacmanGame jeu = new PacmanGame(10);
+
+
+        ControleurPacmanGame control = new ControleurPacmanGame(jeu); //, new PanelPacmanGame(null)));
 
 
     }

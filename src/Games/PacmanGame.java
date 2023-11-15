@@ -9,30 +9,38 @@ public class PacmanGame extends Game {
 
     // --- Atrributs --- //
 
-    private Maze maze;
     private ArrayList<AbstractAgent> liste_agents;
     
     // --- Constructeur --- //
 
     public PacmanGame(int maxturn) {
         super(maxturn);
-        this.liste_agents = new ArrayList<AbstractAgent>();
     }
 
     // --- Méthodes Héritées de Game --- //
-
+    
     @Override
-    public void initialiseGame() {
-        ArrayList<PositionAgent> pacman_start = maze.getPacman_start(); // comment récupérer les positions de départ ?
-        ArrayList<PositionAgent> ghosts_start = maze.getGhosts_start(); // elles doivent être récupérées en copie --> ne doiventp pas changer dans maze
+    public void initialiseGame() throws Exception {
+
+        //initialise les 2 attributs qui ne peuvent pas être initialisés dans Constructeur (car appel de méthode initialiseGame dans super contrôleur)
+        this.maze = new Maze("layouts/testMaze.lay");
+        this.liste_agents = new ArrayList<AbstractAgent>();
+
+        // récupère position départ en copie --> non changées dans maze --> possibilité de restart le jeu
+        ArrayList<PositionAgent> pacman_start = this.maze.getPacman_start();
+        ArrayList<PositionAgent> ghosts_start = this.maze.getGhosts_start();
+
+        //ajout les positions de départ des agents à la liste des agents du jeu
         for (PositionAgent e : pacman_start) {
             this.liste_agents.add(new AgentPacman(e));
         }
         for (PositionAgent e : ghosts_start) {
             this.liste_agents.add(new AgentGhost(e));
         }
+        
         System.out.println("Le jeu est initialisé");
     }
+    
 
     @Override
     public void takeTurn() {

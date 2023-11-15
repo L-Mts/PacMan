@@ -4,6 +4,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.lang.Runnable;
 
+import Ressources.Maze;
+
 public abstract class Game implements Runnable {
 
     // --- Attributs --- //
@@ -21,6 +23,8 @@ public abstract class Game implements Runnable {
     private Thread thread;
 
     public long time;
+
+    public Maze maze;
 
     // --- Constructeur --- //
 
@@ -52,7 +56,7 @@ public abstract class Game implements Runnable {
 
     // --- Méthodes Abstraites --- //
 
-    public abstract void initialiseGame();
+    public abstract void initialiseGame() throws Exception;
     public abstract void takeTurn();
     public abstract boolean gameContinue();
     public abstract void gameOver();
@@ -63,7 +67,12 @@ public abstract class Game implements Runnable {
     //initialise jeu
     public void init() {
         this.turn = 0;
-        initialiseGame();
+        try {
+            initialiseGame();
+        } catch (Exception e) {
+            System.out.println("Erreur à l'initialisation du jeu: Java Exception " + e.getMessage());
+            System.out.println("Erreur à l'initialisation du jeu, vérifier le nom du fichier labyrinthe");
+        }
     }
 
     //effectue un tour de jeu

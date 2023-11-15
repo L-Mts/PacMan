@@ -5,7 +5,7 @@ import Games.*;
 public abstract class AbstractController {
 
     // --- Attributs --- //
-    private Game jeu;
+    protected Game jeu;
 
     // --- Constructeur --- //
 

@@ -16,19 +16,19 @@ import java.util.ArrayList;
 
 public class ViewPacmanGame implements PropertyChangeListener {
 
-    Maze maze;
     PanelPacmanGame panel;
 
-    public ViewPacmanGame (Game jeu) throws Exception {
+    public ViewPacmanGame (Game jeu) {
 
-        this.maze = new Maze("layouts/testMaze.lay");
-        this.panel = new PanelPacmanGame(maze);
+        System.out.println(jeu.maze.toString()); // NE TROUVE PAS LE MAZE
+
+        this.panel = new PanelPacmanGame(jeu.maze);
 
         JFrame pacmanGameView = new JFrame();
         pacmanGameView.setTitle("Game");
 
-        int maze_x = maze.getSizeX();
-        int maze_y = maze.getSizeY();
+        int maze_x = jeu.maze.getSizeX();
+        int maze_y = jeu.maze.getSizeY();
         pacmanGameView.setSize(new Dimension(maze_x*30,maze_y*30));
         Dimension windowSize = pacmanGameView.getSize();
 
