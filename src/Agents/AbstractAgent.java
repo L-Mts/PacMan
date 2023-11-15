@@ -1,12 +1,14 @@
 package Agents;
 
 import Ressources.*;
+import Strategies.*;
 
 public abstract class AbstractAgent {
 
     // --- Attributs --- //
 
     private PositionAgent pos;
+    private Strategie strategie;
 
     // --- Constructeur --- //
 
@@ -17,10 +19,18 @@ public abstract class AbstractAgent {
     // --- Méthodes --- //
 
     public PositionAgent getPos() {
-        return pos;
+        return this.pos;
     }
 
     public void setPos(PositionAgent pos) {
         this.pos = pos;
+    }
+
+    public Strategie getStrategie() {
+        return this.strategie;
+    } 
+
+    public void setStrategie(Strategie strat) {
+        this.strategie = strat;
     }
 }

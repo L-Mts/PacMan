@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Agents.*;
 import Ressources.*;
+import Strategies.StrategieRandom;
 
 public class PacmanGame extends Game {
 
@@ -38,6 +39,12 @@ public class PacmanGame extends Game {
             this.liste_agents.add(new AgentGhost(e));
         }
 
+        // Tous les agents démarrent avec une strategie random
+        System.out.println("Les agents ont tous une stratégie Random");
+        for (AbstractAgent e : this.liste_agents) {
+            e.setStrategie(new StrategieRandom());
+        }
+
         System.out.println("Le jeu est initialisé");
     }
     
@@ -46,12 +53,9 @@ public class PacmanGame extends Game {
     public void takeTurn() {
         // effectue une action pour chaque agent
 
-        //Pour l'instant : génère nombre aléatoire
-        //TODO: implémenter stratégies -> génération int de direction selon stratégie de chaque agent
-        int random = (int) (Math.random() * 5);
-
         for (AbstractAgent e : this.liste_agents) {
-            moveAgent(e, new AgentAction(random));                   // TODO : changer le nombre dans new AgentAction selon stratégie !
+            AgentAction action = e.getStrategie().getAction(e, this.maze);
+            moveAgent(e, action);
             if (this.maze.isFood(e.getPos().getX(), e.getPos().getY())) {
                 this.maze.setFood(e.getPos().getX(), e.getPos().getY(), false);
             }
