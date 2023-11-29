@@ -40,7 +40,7 @@ public abstract class Game implements Runnable {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     
     public void addPropertyChangeListener(String property, PropertyChangeListener listener) {
-        support.addPropertyChangeListener( property, listener);
+        support.addPropertyChangeListener(property, listener);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

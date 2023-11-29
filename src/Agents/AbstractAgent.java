@@ -1,5 +1,7 @@
 package Agents;
 
+import java.util.ArrayList;
+
 import Ressources.*;
 import Strategies.*;
 
@@ -8,12 +10,14 @@ public abstract class AbstractAgent {
     // --- Attributs --- //
 
     private PositionAgent pos;
-    private Strategie strategie;
+    private AbstractStrategie strategie;
+    public ArrayList<PositionAgent> lastFivePos;
 
     // --- Constructeur --- //
 
     public AbstractAgent (PositionAgent pos) {
         this.pos = pos;
+        this.lastFivePos = new ArrayList<PositionAgent>();
     }
     
     // --- Méthodes --- //
@@ -26,11 +30,21 @@ public abstract class AbstractAgent {
         this.pos = pos;
     }
 
-    public Strategie getStrategie() {
+    public AbstractStrategie getStrategie() {
         return this.strategie;
     } 
 
-    public void setStrategie(Strategie strat) {
+    public void setStrategie(AbstractStrategie strat) {
         this.strategie = strat;
     }
+
+    public ArrayList<PositionAgent> getLastFivePos () {
+        return this.lastFivePos;
+    }
+
+    public void setLastFivePos (ArrayList<PositionAgent> lastFivePos) {
+        this.lastFivePos = lastFivePos;
+    }
+
+
 }
