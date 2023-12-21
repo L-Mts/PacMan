@@ -33,7 +33,7 @@ public class PacmanGame extends Game {
     public void initialiseGame() throws Exception {
 
         //initialise les 2 attributs qui ne peuvent pas être initialisés dans Constructeur (car appel de méthode initialiseGame dans super contrôleur)
-        this.maze = new Maze("layouts/openClassic.lay");
+        this.maze = new Maze("layouts/capsuleClassic.lay");
         this.liste_agents = new ArrayList<AbstractAgent>();
 
         // récupère positions de départ en copie --> non changées dans maze --> possibilité de restart le jeu
@@ -85,9 +85,32 @@ public class PacmanGame extends Game {
                     this.maze.setCapsule(e.getPos().getX(), e.getPos().getY(), false);
                     this.capsuleCompteur = 20;
                 }
-            }
+            }   
         }
 
+        if (this.capsuleCompteur > 0) {
+            ArrayList<AbstractAgent> toRemove = new ArrayList<AbstractAgent>();
+            for (AbstractAgent pacman : this.liste_agents) {
+                if (pacman instanceof AgentPacman) {
+                    for (AbstractAgent ghost : this.liste_agents) {
+                        System.out.println("Entrée dans le for");
+                        if (ghost instanceof AgentGhost && (ghost.getPos().equals(pacman.getPos()) || ghost.getPos().equals(pacman.getLastPos()) ) && !toRemove.contains(ghost)) {
+                            System.out.println("Entrée dans le if");
+                            toRemove.add(ghost);
+                        }
+                    }
+                }
+            }
+            if (toRemove.isEmpty() == false) {
+                System.out.println("toRemove no empty");
+                System.out.println("Liste des agents = " + this.liste_agents);
+                for (AbstractAgent ghost : toRemove) {
+                    this.liste_agents.remove(ghost);
+                }
+                System.out.println("Liste des agents = " + this.liste_agents);
+            }
+            
+        }
         
         System.out.println("Tour " + this.turn + " en cours");
     }
