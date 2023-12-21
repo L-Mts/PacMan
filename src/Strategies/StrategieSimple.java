@@ -18,10 +18,9 @@ public class StrategieSimple extends AbstractStrategie {
         int i = 0;
         AgentAction actionSimple = new AgentAction(0);
 
-        if (agent.lastFivePos.isEmpty() == false) {
-            PositionAgent last_pos = agent.lastFivePos.get(agent.lastFivePos.size() - 1);
-            int last_x = last_pos.getX();
-            int last_y = last_pos.getY();
+        if (agent.lastPos != null) {
+            int last_x = agent.lastPos.getX();
+            int last_y = agent.lastPos.getY();
             PositionAgent pos = agent.getPos();
             int x = pos.getX();
             int y = pos.getY();

@@ -208,6 +208,10 @@ public class PanelPacmanGame extends JPanel {
 		this.ghostsScarred = ghostsScarred;
 	}
 
+	public boolean getGhostsScarred() {
+		return this.ghostsScarred;
+	}
+
 	public ArrayList<PositionAgent> getPacmans_pos() {
 		return pacmans_pos;
 	}

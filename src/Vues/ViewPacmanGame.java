@@ -68,14 +68,26 @@ public class ViewPacmanGame implements PropertyChangeListener {
             }
         }
 
-        panel.setPacmans_pos(pacman_pos);
-        panel.setGhosts_pos(ghost_pos);       
+        this.panel.setPacmans_pos(pacman_pos);
+        this.panel.setGhosts_pos(ghost_pos);       
 
-        panel.repaint();
+        if (this.jeu.getCapsuleCompteur()==20 && this.panel.getGhostsScarred()==false) this.panel.setGhostsScarred(true);
+        if (this.jeu.getCapsuleCompteur()==0 && this.panel.getGhostsScarred()==true) this.panel.setGhostsScarred(false);
+
+        this.panel.repaint();
 
         for(PositionAgent posPacman : pacman_pos) {
             for (PositionAgent posGhost : ghost_pos) {
                 if (posPacman.getX()==posGhost.getX() && posPacman.getY()==posGhost.getY()) this.gameOver();
+            }
+        }
+        
+        for (AbstractAgent e : this.jeu.getListe_agents()) {
+            if (e instanceof AgentPacman) {
+                PositionAgent lastPos = e.getLastPos();
+                for (PositionAgent posGhost : ghost_pos) {
+                    if (lastPos.getX()==posGhost.getX() && lastPos.getY()==posGhost.getY()) this.gameOver();
+                }
             }
         }
     }

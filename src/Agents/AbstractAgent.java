@@ -11,13 +11,12 @@ public abstract class AbstractAgent {
 
     private PositionAgent pos;
     private AbstractStrategie strategie;
-    public ArrayList<PositionAgent> lastFivePos;
+    public PositionAgent lastPos;
 
     // --- Constructeur --- //
 
     public AbstractAgent (PositionAgent pos) {
         this.pos = pos;
-        this.lastFivePos = new ArrayList<PositionAgent>();
     }
     
     // --- Méthodes --- //
@@ -38,12 +37,12 @@ public abstract class AbstractAgent {
         this.strategie = strat;
     }
 
-    public ArrayList<PositionAgent> getLastFivePos () {
-        return this.lastFivePos;
+    public PositionAgent getLastPos () {
+        return this.lastPos;
     }
 
-    public void setLastFivePos (ArrayList<PositionAgent> lastFivePos) {
-        this.lastFivePos = lastFivePos;
+    public void setLastPos (PositionAgent lastPos) {
+        this.lastPos = lastPos;
     }
 
 

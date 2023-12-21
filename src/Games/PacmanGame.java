@@ -14,6 +14,7 @@ public class PacmanGame extends Game {
     private ArrayList<PositionAgent> pacman_start;
     private ArrayList<PositionAgent> ghosts_start;
     private boolean continu = true;
+    private int capsuleCompteur = 0;
     
     // --- Constructeur --- //
 
@@ -32,7 +33,7 @@ public class PacmanGame extends Game {
     public void initialiseGame() throws Exception {
 
         //initialise les 2 attributs qui ne peuvent pas être initialisés dans Constructeur (car appel de méthode initialiseGame dans super contrôleur)
-        this.maze = new Maze("layouts/smallClassic.lay");
+        this.maze = new Maze("layouts/openClassic.lay");
         this.liste_agents = new ArrayList<AbstractAgent>();
 
         // récupère positions de départ en copie --> non changées dans maze --> possibilité de restart le jeu
@@ -72,22 +73,21 @@ public class PacmanGame extends Game {
      */
     @Override
     public void takeTurn() {
-        // effectue une action pour chaque agent
-
+        if (this.capsuleCompteur > 0) this.capsuleCompteur = this.capsuleCompteur-1;
         for (AbstractAgent e : this.liste_agents) {
             AgentAction action = e.getStrategie().getAction(e, this.maze);
             moveAgent(e, action);
-            if (this.maze.isFood(e.getPos().getX(), e.getPos().getY())) {
-                this.maze.setFood(e.getPos().getX(), e.getPos().getY(), false);
-            }
-            if (this.maze.isCapsule(e.getPos().getX(), e.getPos().getY())) {
-                this.maze.setCapsule(e.getPos().getX(), e.getPos().getY(), false);
+            if (e instanceof AgentPacman) {
+                if (this.maze.isFood(e.getPos().getX(), e.getPos().getY())) {
+                    this.maze.setFood(e.getPos().getX(), e.getPos().getY(), false);
+                }
+                if (this.maze.isCapsule(e.getPos().getX(), e.getPos().getY())) {
+                    this.maze.setCapsule(e.getPos().getX(), e.getPos().getY(), false);
+                    this.capsuleCompteur = 20;
+                }
             }
         }
 
-       
-        // TODO mise à jour du labyrinthe (food eaten, ...)
-        // = mise à jour des tableaux de boolean Food et Capsule
         
         System.out.println("Tour " + this.turn + " en cours");
     }
@@ -151,7 +151,7 @@ public class PacmanGame extends Game {
         int vy = action.get_vy();
         int dir = action.get_direction();
         PositionAgent pos = agent.getPos();
-        agent.lastFivePos.add(pos);
+        agent.setLastPos(pos);
         PositionAgent new_pos = new PositionAgent(pos.getX()+vx, pos.getY()+vy, dir);
         agent.setPos(new_pos);
     }
@@ -169,6 +169,15 @@ public class PacmanGame extends Game {
     public void setListe_agents(ArrayList<AbstractAgent> liste_agents) {
         this.liste_agents = liste_agents;
     }
+
+    /**
+     * @return this.capsuleCompteur
+     */
+    public int getCapsuleCompteur() {
+        return this.capsuleCompteur;
+    }
+
+
 
     
 }
