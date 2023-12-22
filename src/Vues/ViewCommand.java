@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Controlleurs.*;
+import Controllers.*;
 import States.*;
 import Games.*;
 

@@ -1,4 +1,4 @@
-package Controlleurs;
+package Controllers;
 
 import Games.*;
 

@@ -1,4 +1,4 @@
-import Controlleurs.*;
+import Controllers.*;
 import Games.*;
 
 public class Appli {
