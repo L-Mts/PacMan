@@ -15,6 +15,7 @@ public class PacmanGame extends Game {
     private ArrayList<PositionAgent> ghosts_start;
     private boolean continu = true;
     private int capsuleCompteur = 0;
+    private AgentPacman pacmanInteractif;
     
     // --- Constructeur --- //
 
@@ -56,10 +57,22 @@ public class PacmanGame extends Game {
         }
         */
 
+        /*
         // Tous les agent démarrent avec la stratégie simple
         System.out.println("Les agents ont tous une stratégie Simple");
         for (AbstractAgent e : this.liste_agents) {
             e.setStrategie(new StrategieSimple(this));
+        }
+        */
+
+        // Pour un jeu interactif, on considère qu'on ne contrôle qu'un seul Pacman même s'il y en a plusieurs initialisé avec la map
+        for (AbstractAgent e : this.liste_agents) {
+            if (e instanceof AgentPacman) {
+                e.setStrategie(new StrategieInteractive(this));
+                if (this.pacmanInteractif == null) this.pacmanInteractif = (AgentPacman) e;
+            } else {
+                e.setStrategie(new StrategieSimple(this));
+            }
         }
 
         System.out.println("Le jeu est initialisé");
@@ -73,7 +86,17 @@ public class PacmanGame extends Game {
      */
     @Override
     public void takeTurn() {
-        if (this.capsuleCompteur > 0) this.capsuleCompteur = this.capsuleCompteur-1;
+        if (this.capsuleCompteur > 0) {
+            this.capsuleCompteur = this.capsuleCompteur-1;
+            if (this.capsuleCompteur == 0) {
+                for (AbstractAgent ghost : this.liste_agents) {
+                    if (ghost instanceof AgentGhost) {
+                        ghost.setStrategie(new StrategieSimple(this));
+                    }
+                }
+            }
+        }
+
         for (AbstractAgent e : this.liste_agents) {
             AgentAction action = e.getStrategie().getAction(e, this.maze);
             moveAgent(e, action);
@@ -88,26 +111,29 @@ public class PacmanGame extends Game {
             }   
         }
 
+        if (this.capsuleCompteur == 20) {
+            for (AbstractAgent ghost : this.liste_agents) {
+                if (ghost instanceof AgentGhost) {
+                    ghost.setStrategie(new StrategieSimpleGhostScarred(this));
+                }
+            }
+        }
+
         if (this.capsuleCompteur > 0) {
             ArrayList<AbstractAgent> toRemove = new ArrayList<AbstractAgent>();
             for (AbstractAgent pacman : this.liste_agents) {
                 if (pacman instanceof AgentPacman) {
                     for (AbstractAgent ghost : this.liste_agents) {
-                        System.out.println("Entrée dans le for");
                         if (ghost instanceof AgentGhost && (ghost.getPos().equals(pacman.getPos()) || ghost.getPos().equals(pacman.getLastPos()) ) && !toRemove.contains(ghost)) {
-                            System.out.println("Entrée dans le if");
                             toRemove.add(ghost);
                         }
                     }
                 }
             }
             if (toRemove.isEmpty() == false) {
-                System.out.println("toRemove no empty");
-                System.out.println("Liste des agents = " + this.liste_agents);
                 for (AbstractAgent ghost : toRemove) {
                     this.liste_agents.remove(ghost);
                 }
-                System.out.println("Liste des agents = " + this.liste_agents);
             }
             
         }
@@ -198,6 +224,13 @@ public class PacmanGame extends Game {
      */
     public int getCapsuleCompteur() {
         return this.capsuleCompteur;
+    }
+
+    /**
+     * @return this.capsuleCompteur
+     */
+    public AgentPacman getPacmanInteractif () {
+        return this.pacmanInteractif;
     }
 
 

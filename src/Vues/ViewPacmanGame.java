@@ -5,8 +5,11 @@ import javax.swing.*;
 import Agents.*;
 import Games.*;
 import Ressources.*;
+import Strategies.StrategieInteractive;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -43,6 +46,31 @@ public class ViewPacmanGame implements PropertyChangeListener {
         
         // Observateur de "turn"
         this.jeu.addPropertyChangeListener("turn", this);
+
+
+        pacmanGameView.addKeyListener(new KeyAdapter() {
+            StrategieInteractive stratPacmanInteractif = (StrategieInteractive) jeu.getPacmanInteractif().getStrategie();
+            // 0: HAUT / 1: BAS / 2: DROITE / 3: GAUCHE / 4: STOP
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_UP) {
+                    System.out.println("Up Arrrow-Key is pressed!");
+                    stratPacmanInteractif.setDirection(0);
+                }
+                else if (keyCode == KeyEvent.VK_DOWN) {
+                    System.out.println("Down Arrrow-Key is pressed!");
+                    stratPacmanInteractif.setDirection(1);
+                }
+                else if (keyCode == KeyEvent.VK_LEFT) {
+                    System.out.println("Left Arrrow-Key is pressed!");
+                    stratPacmanInteractif.setDirection(3);
+                }
+                else if (keyCode == KeyEvent.VK_RIGHT) {
+                    System.out.println("Right Arrrow-Key is pressed!");
+                    stratPacmanInteractif.setDirection(2);
+                }
+            }
+        });
 
     }
 

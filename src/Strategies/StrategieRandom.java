@@ -27,7 +27,7 @@ public class StrategieRandom extends AbstractStrategie {
         if (this.jeu.isLegalMove(agent, actionRandom)) {
             return actionRandom;
         } else {
-            return new AgentAction(4);
+            return AbstractStrategie.actionSTOP;
         }
     }
     
