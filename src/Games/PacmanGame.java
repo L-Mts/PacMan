@@ -21,11 +21,16 @@ public class PacmanGame extends Game {
     private int capsuleCompteur = 0;
     private int nbrCapsules;
     private int nbrFood;
+
+    private int points;
+    private int lifes;
     
     // ending = -1 : le jeu est en cours
     // ending = 0 : Game Over - perdu
     // ending = 1 : Game Win - gagné
     private int ending = -1;
+
+    
 
     // --- Constructeur --- //
 
@@ -43,6 +48,8 @@ public class PacmanGame extends Game {
     @Override
     public void initialiseGame() throws Exception {
         this.pacmanInteractif = null;
+        this.points = 0;
+        this.lifes = 3;
 
         //initialise les 2 attributs qui ne peuvent pas être initialisés dans Constructeur (car appel de méthode initialiseGame dans super contrôleur)
         this.maze = new Maze("layouts/capsuleClassic.lay");
@@ -124,11 +131,13 @@ public class PacmanGame extends Game {
                 if (this.maze.isFood(e.getPos().getX(), e.getPos().getY())) {
                     this.maze.setFood(e.getPos().getX(), e.getPos().getY(), false);
                     this.nbrFood -= 1;
+                    this.points += 10;
                 }
                 if (this.maze.isCapsule(e.getPos().getX(), e.getPos().getY())) {
                     this.maze.setCapsule(e.getPos().getX(), e.getPos().getY(), false);
                     this.capsuleCompteur = 20;
                     this.nbrCapsules -= 1;
+                    this.points += 20;
                 }
             }   
         }
@@ -155,6 +164,7 @@ public class PacmanGame extends Game {
             if (toRemove.isEmpty() == false) {
                 for (AbstractAgent ghost : toRemove) {
                     this.liste_agents.remove(ghost);
+                    this.points += 50;
                 }
             }
             
@@ -216,7 +226,10 @@ public class PacmanGame extends Game {
 
         for(PositionAgent posPacman : pacman_pos) {
             for (PositionAgent posGhost : ghost_pos) {
-                if (posPacman.getX()==posGhost.getX() && posPacman.getY()==posGhost.getY()) this.gameOver();
+                if (posPacman.getX()==posGhost.getX() && posPacman.getY()==posGhost.getY()) {
+                    if (this.lifes > 0) this.lifes -= 1;
+                    else this.gameOver();
+                } 
             }
         }
         
@@ -224,7 +237,10 @@ public class PacmanGame extends Game {
             if (e instanceof AgentPacman) {
                 PositionAgent lastPos = e.getLastPos();
                 for (PositionAgent posGhost : ghost_pos) {
-                    if (lastPos.getX()==posGhost.getX() && lastPos.getY()==posGhost.getY()) this.gameOver();
+                    if (lastPos.getX()==posGhost.getX() && lastPos.getY()==posGhost.getY()){
+                        if (this.lifes > 0) this.lifes -= 1;
+                        else this.gameOver();
+                    }
                 }
             }
         }
@@ -301,6 +317,21 @@ public class PacmanGame extends Game {
      */
     public int getEnding () {
         return this.ending;
+    }
+
+    /**
+     * @return this.points
+     */
+    public int getPoints () {
+        return this.points;
+    }
+
+    /**
+     * @return string this.points
+     */
+    public String pointsToString () {
+        String str = Integer.toString(this.points);
+        return str;
     }
 
 }

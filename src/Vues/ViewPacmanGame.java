@@ -40,13 +40,25 @@ public class ViewPacmanGame implements PropertyChangeListener {
         int dx = centerPoint.x - windowSize.width / 2 ;
         int dy = centerPoint.y - windowSize.height / 2;
         this.pacmanGameView.setLocation(dx, dy-75);
-        this.pacmanGameView.add(this.panel);
+
+        this.pacmanGameView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+
+        // Compte les points & le nombre de vies & le choix du labyrinthe
+        JPanel panelTop = new JPanel(new GridLayout(1, 3));
+        JLabel nbrPoints = new JLabel("0", JLabel.LEFT);
+        JLabel nbrLifes = new JLabel( "3", JLabel.CENTER);
+
+        panelTop.add(nbrPoints);
+        panelTop.add(nbrLifes);
+        
+
+        this.pacmanGameView.add(this.panel);
+
         this.pacmanGameView.setVisible(true);
         
         // Observateur de "turn"
         this.jeu.addPropertyChangeListener("turn", this);
-
 
         pacmanGameView.addKeyListener(new KeyAdapter() {
             StrategieInteractive stratPacmanInteractif = (StrategieInteractive) jeu.getPacmanInteractif().getStrategie();
@@ -126,13 +138,13 @@ public class ViewPacmanGame implements PropertyChangeListener {
         label.setHorizontalAlignment(JLabel.CENTER);
         
         if (this.jeu.getEnding() == 0) {
-            label.setText("GAME OVER !!!");
+            label.setText("<html><center>GAME OVER !!! <br/>Points : " + this.jeu.pointsToString() + "</center></html>");
             label.setForeground(Color.RED);
         } else {
-            label.setText("YOU WIN !!!");
+            label.setText("<html><center>YOU WIN !!! <br/>Points : " + this.jeu.pointsToString() + "</center></html>");
             label.setForeground(Color.GREEN);
         }
-        
+
         viewGameOver.add(label);
 
         viewGameOver.setVisible(true);
