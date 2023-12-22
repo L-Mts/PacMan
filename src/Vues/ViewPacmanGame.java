@@ -21,6 +21,9 @@ public class ViewPacmanGame implements PropertyChangeListener {
     PacmanGame jeu;
     JFrame pacmanGameView;
 
+    JLabel nbrPoints = new JLabel("Points : 0", JLabel.CENTER);
+    JLabel nbrLifes = new JLabel( "Lifes : 3", JLabel.CENTER);
+
     public ViewPacmanGame (PacmanGame jeu) {
 
         this.jeu = jeu;
@@ -42,16 +45,19 @@ public class ViewPacmanGame implements PropertyChangeListener {
         this.pacmanGameView.setLocation(dx, dy-75);
 
         this.pacmanGameView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
 
-        // Compte les points & le nombre de vies & le choix du labyrinthe
+        // Compte les points & le nombre de vies
         JPanel panelTop = new JPanel(new GridLayout(1, 3));
-        JLabel nbrPoints = new JLabel("0", JLabel.LEFT);
-        JLabel nbrLifes = new JLabel( "3", JLabel.CENTER);
+        panelTop.setBackground(new Color(52, 152, 219));
 
-        panelTop.add(nbrPoints);
-        panelTop.add(nbrLifes);
+        this.nbrPoints.setForeground(Color.WHITE);
+        this.nbrLifes.setForeground(Color.WHITE);
+
+        panelTop.add(this.nbrPoints);
+        panelTop.add(this.nbrLifes);
         
+
+        this.pacmanGameView.add(panelTop, BorderLayout.NORTH);        
 
         this.pacmanGameView.add(this.panel);
 
@@ -103,6 +109,9 @@ public class ViewPacmanGame implements PropertyChangeListener {
 
             if (this.jeu.getCapsuleCompteur()==20 && this.panel.getGhostsScarred()==false) this.panel.setGhostsScarred(true);
             if (this.jeu.getCapsuleCompteur()==0 && this.panel.getGhostsScarred()==true) this.panel.setGhostsScarred(false);
+
+            this.nbrPoints.setText("Points : " + this.jeu.getPoints());
+            this.nbrLifes.setText("Lifes : " + this.jeu.getLifes());
 
             this.panel.repaint();
 

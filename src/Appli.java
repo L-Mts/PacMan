@@ -1,7 +1,7 @@
 import Controlleurs.*;
 import Games.*;
 
-public class Test {
+public class Appli {
     public static void main(String[] args) throws Exception {
 
         /**
@@ -18,7 +18,7 @@ public class Test {
 
         PacmanGame jeu = new PacmanGame(10);
 
-        ControllerPacmanGame control = new ControllerPacmanGame(jeu); //, new PanelPacmanGame(null)));
+        ControllerPacmanGame controller = new ControllerPacmanGame(jeu); //, new PanelPacmanGame(null)));
 
 
     }

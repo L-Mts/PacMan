@@ -327,6 +327,13 @@ public class PacmanGame extends Game {
     }
 
     /**
+     * @return this.lifes
+     */
+    public int getLifes () {
+        return this.lifes;
+    }
+
+    /**
      * @return string this.points
      */
     public String pointsToString () {
