@@ -37,6 +37,12 @@ public class Maze implements Serializable, Cloneable {
 	private ArrayList<PositionAgent> pacman_start;
 	private ArrayList<PositionAgent> ghosts_start;
 
+	/**
+	 * Le nombre de nourritures & capsules du labyrinthe
+	 */
+	private int nbrCapsules;
+	private int nbrFood;
+
 	public Maze(String filename) throws Exception {
 		try {
 			System.out.println("Layout file is " + filename);
@@ -84,13 +90,15 @@ public class Maze implements Serializable, Cloneable {
 						walls[x][y] = true;
 					else
 						walls[x][y] = false;
-					if (ligne.charAt(x) == '.')
+					if (ligne.charAt(x) == '.') {
 						food[x][y] = true;
-					else
+						nbrFood += 1;
+					} else
 						food[x][y] = false;
-					if (ligne.charAt(x) == 'o')
+					if (ligne.charAt(x) == 'o') {
 						capsules[x][y] = true;
-					else
+						nbrCapsules += 1;
+					} else
 						capsules[x][y] = false;
 					if (ligne.charAt(x) == 'P') {
 						pacman_start.add(new PositionAgent(x, y, Maze.NORTH));
@@ -139,6 +147,20 @@ public class Maze implements Serializable, Cloneable {
 	 */
 	public int getSizeY() {
 		return (size_y);
+	}
+
+	/**
+	 * Renvoie le nombre de capsules du labyrinthe
+	 */
+	public int getNbrCapsules() {
+		return (nbrCapsules);
+	}
+
+	/**
+	 * Renvoie le nombre de nourritures du labyrinthe
+	 */
+	public int getNbrFood() {
+		return (nbrFood);
 	}
 
 	/**

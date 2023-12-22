@@ -16,5 +16,13 @@ public class ControleurPacmanGame extends AbstractController {
         this.vueCommandes = new ViewCommand(jeu, this);
     }
 
+    @Override
+    public void restart () {
+        System.out.println("Restart Game\n");
+        this.jeu.pause();
+        this.jeu.init();
+        this.vueJeu = new ViewPacmanGame((PacmanGame) jeu);
+    }
+
     
 }

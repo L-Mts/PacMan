@@ -13,10 +13,20 @@ public class PacmanGame extends Game {
     private ArrayList<AbstractAgent> liste_agents;
     private ArrayList<PositionAgent> pacman_start;
     private ArrayList<PositionAgent> ghosts_start;
+
     private boolean continu = true;
-    private int capsuleCompteur = 0;
+
     private AgentPacman pacmanInteractif;
+
+    private int capsuleCompteur = 0;
+    private int nbrCapsules;
+    private int nbrFood;
     
+    // ending = -1 : le jeu est en cours
+    // ending = 0 : Game Over - perdu
+    // ending = 1 : Game Win - gagné
+    private int ending = -1;
+
     // --- Constructeur --- //
 
     public PacmanGame(int maxturn) {
@@ -32,14 +42,20 @@ public class PacmanGame extends Game {
      */
     @Override
     public void initialiseGame() throws Exception {
+        this.pacmanInteractif = null;
 
         //initialise les 2 attributs qui ne peuvent pas être initialisés dans Constructeur (car appel de méthode initialiseGame dans super contrôleur)
         this.maze = new Maze("layouts/capsuleClassic.lay");
+        
         this.liste_agents = new ArrayList<AbstractAgent>();
 
         // récupère positions de départ en copie --> non changées dans maze --> possibilité de restart le jeu
         this.pacman_start = this.maze.getPacman_start();
         this.ghosts_start = this.maze.getGhosts_start();
+
+        // récupère le nombre de food et de capsules du jeu
+        this.nbrCapsules = this.maze.getNbrCapsules();
+        this.nbrFood = this.maze.getNbrFood();
 
         //ajoute les positions de départ des agents à la liste des agents du jeu
         for (PositionAgent e : pacman_start) {
@@ -49,23 +65,28 @@ public class PacmanGame extends Game {
             this.liste_agents.add(new AgentGhost(e));
         }
 
-        /*
+        /* POUR UNE STRATEGIE RANDOM
+
         // Tous les agents démarrent avec une strategie random
         System.out.println("Les agents ont tous une stratégie Random");
         for (AbstractAgent e : this.liste_agents) {
             e.setStrategie(new StrategieRandom(this));
         }
+
         */
 
-        /*
+        /* POUR UNE STRATEGIE SIMPLE POUR TOUS LES AGENTS
+        
         // Tous les agent démarrent avec la stratégie simple
         System.out.println("Les agents ont tous une stratégie Simple");
         for (AbstractAgent e : this.liste_agents) {
             e.setStrategie(new StrategieSimple(this));
         }
+
         */
 
-        // Pour un jeu interactif, on considère qu'on ne contrôle qu'un seul Pacman même s'il y en a plusieurs initialisé avec la map
+        /* POUR UNE STRATEGIE INTERACTIVE POUR LE PACMAN ET UNE STRATEGIE SIMPLE POUR LES AUTRES AGENTS */
+        // Pour un jeu interactif, on considère qu'on ne contrôle qu'un seul Pacman (le premier trouvé parmis les agents du labyrinthe) même s'il y en a plusieurs initialisé avec le labyrinthe
         for (AbstractAgent e : this.liste_agents) {
             if (e instanceof AgentPacman) {
                 e.setStrategie(new StrategieInteractive(this));
@@ -77,7 +98,6 @@ public class PacmanGame extends Game {
 
         System.out.println("Le jeu est initialisé");
     }
-    
 
     /**
      * <p> Pour chaque agent du jeu, effectue une action selon sa stratégie personnelle </p>
@@ -103,10 +123,12 @@ public class PacmanGame extends Game {
             if (e instanceof AgentPacman) {
                 if (this.maze.isFood(e.getPos().getX(), e.getPos().getY())) {
                     this.maze.setFood(e.getPos().getX(), e.getPos().getY(), false);
+                    this.nbrFood -= 1;
                 }
                 if (this.maze.isCapsule(e.getPos().getX(), e.getPos().getY())) {
                     this.maze.setCapsule(e.getPos().getX(), e.getPos().getY(), false);
                     this.capsuleCompteur = 20;
+                    this.nbrCapsules -= 1;
                 }
             }   
         }
@@ -137,32 +159,9 @@ public class PacmanGame extends Game {
             }
             
         }
+
+        this.endGame();
         
-        System.out.println("Tour " + this.turn + " en cours");
-    }
-
-    /**
-     * <p> Est-ce que le jeu continu ? </p>
-     * @return vrai
-     */
-    @Override
-    public boolean gameContinue() {
-        return this.continu;
-    }
-
-    /**
-     * 
-     */
-    public void setContinue(boolean val) {
-        this.continu = val;
-    }
-
-    /**
-     * <p> Arrête le jeu </p>
-     */
-    @Override
-    public void gameOver() {
-        System.out.println("Le jeu est terminé");
     }
 
 
@@ -187,7 +186,6 @@ public class PacmanGame extends Game {
         
         return false;
     }
-
     
     /** 
      * <p> Mise à jour de la position de l'agent selon l'action effectuée </p>
@@ -203,6 +201,71 @@ public class PacmanGame extends Game {
         agent.setLastPos(pos);
         PositionAgent new_pos = new PositionAgent(pos.getX()+vx, pos.getY()+vy, dir);
         agent.setPos(new_pos);
+    }
+
+    public void endGame () {
+        ArrayList<PositionAgent> pacman_pos = new ArrayList<PositionAgent>();
+        ArrayList<PositionAgent> ghost_pos = new ArrayList<PositionAgent>();
+        for (AbstractAgent e : this.liste_agents) {
+            if (e instanceof AgentPacman) {
+                pacman_pos.add(e.getPos());
+            } else {
+                ghost_pos.add(e.getPos());
+            }
+        }
+
+        for(PositionAgent posPacman : pacman_pos) {
+            for (PositionAgent posGhost : ghost_pos) {
+                if (posPacman.getX()==posGhost.getX() && posPacman.getY()==posGhost.getY()) this.gameOver();
+            }
+        }
+        
+        for (AbstractAgent e : this.getListe_agents()) {
+            if (e instanceof AgentPacman) {
+                PositionAgent lastPos = e.getLastPos();
+                for (PositionAgent posGhost : ghost_pos) {
+                    if (lastPos.getX()==posGhost.getX() && lastPos.getY()==posGhost.getY()) this.gameOver();
+                }
+            }
+        }
+
+        if (this.nbrCapsules == 0 && this.nbrFood == 0) {
+            this.gameWin();
+        }
+    
+    }
+
+    /**
+     * <p> Est-ce que le jeu continu ? </p>
+     * @return vrai
+     */
+    @Override
+    public boolean gameContinue() {
+        return this.continu;
+    }
+
+    /**
+     * 
+     */
+    public void setContinue(boolean val) {
+        this.continu = val;
+    }
+
+    /**
+     * <p> Arrête le jeu - perdu </p>
+     */
+    @Override
+    public void gameOver() {
+        this.setContinue(false);
+        this.ending = 0;
+    }
+
+    /**
+     * <p> Arrête le jeu - gagné </p>
+     */
+    public void gameWin() {
+        this.setContinue(false);
+        this.ending = 1;
     }
 
     /**
@@ -233,7 +296,14 @@ public class PacmanGame extends Game {
         return this.pacmanInteractif;
     }
 
+    /**
+     * @return this.ending
+     */
+    public int getEnding () {
+        return this.ending;
+    }
 
+    
 
     
 }
