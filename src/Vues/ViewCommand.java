@@ -102,9 +102,9 @@ public class ViewCommand implements PropertyChangeListener {
                 if(!state.LockPlayButton()){
                     controller.play();
                     state = new StateRunning();
-                    if (controller instanceof ControleurPacmanGame) {
-                        ((ControleurPacmanGame)controller).vueJeu.pacmanGameView.toFront();
-                        ((ControleurPacmanGame)controller).vueJeu.pacmanGameView.requestFocus();
+                    if (controller instanceof ControllerPacmanGame) {
+                        ((ControllerPacmanGame)controller).vueJeu.pacmanGameView.toFront();
+                        ((ControllerPacmanGame)controller).vueJeu.pacmanGameView.requestFocus();
                     }
                 }  
             }

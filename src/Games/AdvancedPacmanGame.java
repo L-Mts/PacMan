@@ -6,7 +6,7 @@ import Agents.*;
 import Ressources.*;
 import Strategies.*;
 
-public class PacmanGame extends Game {
+public class AdvancedPacmanGame extends Game {
 
     // --- Atrributs --- //
 
@@ -29,7 +29,7 @@ public class PacmanGame extends Game {
 
     // --- Constructeur --- //
 
-    public PacmanGame(int maxturn) {
+    public AdvancedPacmanGame(int maxturn) {
         super(maxturn);
     }
 

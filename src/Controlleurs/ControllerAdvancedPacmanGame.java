@@ -3,13 +3,13 @@ package Controlleurs;
 import Games.*;
 import Vues.*;
 
-public class ControleurPacmanGame extends AbstractController {
+public class ControllerAdvancedPacmanGame extends AbstractController {
 
 
     public ViewPacmanGame vueJeu;
     public ViewCommand vueCommandes;
 
-    public ControleurPacmanGame (PacmanGame jeu) throws Exception {
+    public ControllerAdvancedPacmanGame (PacmanGame jeu) throws Exception {
         super(jeu);
 
         this.vueJeu = new ViewPacmanGame(jeu);

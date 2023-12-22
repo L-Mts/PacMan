@@ -18,7 +18,7 @@ public class Test {
 
         PacmanGame jeu = new PacmanGame(10);
 
-        ControleurPacmanGame control = new ControleurPacmanGame(jeu); //, new PanelPacmanGame(null)));
+        ControllerPacmanGame control = new ControllerPacmanGame(jeu); //, new PanelPacmanGame(null)));
 
 
     }
